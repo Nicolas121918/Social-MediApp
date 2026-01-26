@@ -18,7 +18,7 @@ export class UsersService {
         if (findUser) {
             throw new Error('Username already exists');
         }
-        // Hashea la contraseña antes de guardarla salt rounds = 10
+        // Hashea la contraseña antes de guardarla
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = this.usersRepository.create({ username, password: hashedPassword });
         // me retorna un objeto del usuario creado
