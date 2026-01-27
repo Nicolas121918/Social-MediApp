@@ -2,11 +2,13 @@
 import { Module } from '@nestjs/common';
 // esto permite integrar TypeORM con NestJS y configurar la conexión a la base de datos
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users/entities/user.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { User } from './users/entities/user.entity';
+import { SeederService } from './seeder/seeder.service';
 import { AuthModule } from './auth/auth.module';
+import { Post } from './users/entities/post.entity';
 
 @Module({
   imports: [
@@ -18,13 +20,13 @@ import { AuthModule } from './auth/auth.module';
       password: 'postgres',
       database: 'auth_db',
       // esta es la clase de la entidad que representa la tabla users
-      entities: [User],
+      entities: [User, Post],
       synchronize: true, // sincroniza la base de datos con las entidades (solo en desarrollo)
     }),
     UsersModule,
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,SeederService],
 })
 export class AppModule {}
