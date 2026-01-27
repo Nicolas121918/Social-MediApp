@@ -14,19 +14,20 @@ import { Post } from './users/entities/post.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'auth_db',
-      // esta es la clase de la entidad que representa la tabla users
+      host: process.env.DB_HOST || 'localhost',
+      port: Number(process.env.DB_PORT) || 5432,
+      username: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'auth_db',
       entities: [User, Post],
-      synchronize: true, // sincroniza la base de datos con las entidades (solo en desarrollo)
+      synchronize: true,
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    TypeOrmModule.forFeature([User, Post]), // <- necesario para inyectar repositorios en SeederService
   ],
   controllers: [AppController],
-  providers: [AppService,SeederService],
+  providers: [AppService, SeederService],
 })
-export class AppModule {}
+export class AppModule { }
+

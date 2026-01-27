@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "./Login.css";
+import  { useState } from "react";
+import "./login.css";
 import { useNavigate } from 'react-router-dom';
 
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         password: password,
       }),
     })
-      .then((data) => {
+      .then(() => {
         alert("¡Registro exitoso!");
         resetForm();
       })
@@ -57,6 +57,9 @@ const Login: React.FC = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.accessToken) {
+          localStorage.setItem("token", data.accessToken);
+          localStorage.setItem("userId", data.user.id.toString());
+          console.log(localStorage.getItem("userId"));
           resetForm();
           navigate("/home");
           alert("¡Inicio de sesión exitoso!");

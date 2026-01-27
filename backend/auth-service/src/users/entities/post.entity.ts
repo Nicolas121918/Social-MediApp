@@ -10,9 +10,8 @@ export class Post {
     @Column()
     title: string;
 
-    // el id del usuario que creo la publicacion
     @Column()
-    createdby: number;
+    createdby: string;
 
     @CreateDateColumn()
     createdAt: Date;

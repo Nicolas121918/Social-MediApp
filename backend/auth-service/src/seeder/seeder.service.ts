@@ -31,7 +31,7 @@ export class SeederService {
             // Crear publicación asociada
             await postRepo.save({
                 title: `Primera publicación de ${name}`,
-                createdby: user.id,
+                createdby: user.username,
                 image_url: "https://img.freepik.com/foto-gratis/codificacion-programas-informaticos-pantalla_53876-138060.jpg?semt=ais_hybrid&w=740&q=80",
             });
         }

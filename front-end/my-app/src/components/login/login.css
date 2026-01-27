@@ -4,7 +4,7 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  background: linear-gradient(135deg, #332361, #250505);
+  background: linear-gradient(135deg, #130a0a, #5b6a92);
   font-family: Arial, sans-serif;
   min-height: 100vh;
 
@@ -41,32 +41,32 @@
 
 .card-side::before {
   content: 'Iniciar sesion';
-  color: #a855f7;
+  color: #000000;
   font-weight: 600;
   font-size: 14px;
 }
 
 .card-side::after {
   content: 'Sign up';
-  color: #9ca3af;
+  color: #ffffff;
   font-weight: 600;
   font-size: 14px;
 }
 
 .toggle:checked~.card-side::before {
-  color: #a855f7;
+  color: #ffffff;
 }
 
 .toggle:checked~.card-side::after {
-  color: #ffffff;
+  color: #000000;
 }
 
 .slider::before {
   content: '';
   width: 40px;
   height: 20px;
-  background-color: #374151;
-  border: 2px solid #9d4edd;
+  background-color: #ffffff;
+  border: 2px solid #000000;
   border-radius: 10px;
   position: relative;
   transition: 0.3s;
@@ -74,7 +74,7 @@
 }
 
 .toggle:checked+.slider::before {
-  background-color: #a855f7;
+  background-color: #ff3434;
 }
 
 .flip-card__inner {
@@ -103,7 +103,7 @@
   align-items: center;
   padding: 30px;
   background: rgba(31, 41, 55, 0.9);
-  border: 2px solid #9d4edd;
+  border: 2px solid #ffffff;
   border-radius: 10px;
   gap: 15px;
 }
@@ -115,7 +115,7 @@
 .title {
   font-size: 26px;
   font-weight: bold;
-  color: #a855f7;
+  color: #d4d4d4;
 }
 
 .flip-card__form {
@@ -131,7 +131,7 @@
   max-width: 240px;
   height: 38px;
   padding: 8px;
-  border: 1px solid #9d4edd;
+  border: 1px solid #dd4e4e;
   border-radius: 5px;
   background-color: #1f2937;
   color: #ffffff;
@@ -140,8 +140,8 @@
 }
 
 .flip-card__input:focus {
-  border-color: #a855f7;
-  box-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .flip-card__input::placeholder {
@@ -151,9 +151,9 @@
 .flip-card__btn {
   width: 100px;
   height: 36px;
-  border: 1px solid #9d4edd;
+  border: 1px solid #ffffff;
   border-radius: 5px;
-  background-color: #9d4edd;
+  background-color: #000000;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -163,8 +163,8 @@
 }
 
 .flip-card__btn:hover {
-  background-color: #a855f7;
-  border-color: #a855f7;
+  background-color: #000000;
+  border-color: #087886;
 }
 
 .flip-card__btn:active {

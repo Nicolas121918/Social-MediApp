@@ -61,7 +61,7 @@ export class AuthService {
 
     }
 
-    async createpost(title: string, createdby: number, image_url?: string) {
+    async createpost(title: string, createdby: string, image_url?: string) {
         const post = this.postsRepository.create({ title, createdby, image_url });
         return await this.postsRepository.save(post);
     }
@@ -73,6 +73,12 @@ export class AuthService {
     async getallUsers() {
         return this.usersRepository.find();
     }
+    async getUserNameById(id: number) {
+        const user = await this.usersRepository.findOne({ where: { id } });
+        if (!user) return null;
+        return { username: user.username };
+    }
+
 
 
 }

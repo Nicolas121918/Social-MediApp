@@ -1,7 +1,14 @@
-.contain{
+.contain {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(36, 32, 32);
-    height: 100vh;
+    background-color: rgb(0, 0, 0); 
+    flex-direction: column;
+}
+.button-new{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 2%;
 }

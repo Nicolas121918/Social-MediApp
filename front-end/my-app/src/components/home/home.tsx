@@ -7,7 +7,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -17,68 +16,121 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReportIcon from '@mui/icons-material/Report'
+import { TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import "./home.css"
 
 
 interface Post {
   id: number;
   title: string;
-  createdby: number;
+  createdby: string;
   createdAt: string;
   image_url: string;
 }
 
-interface MediaProps {
+/* interface MediaProps {
   loading?: boolean;
 }
+ */
 
 
 
-export default function Home(props: MediaProps) {
+
+export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [title, settitle] = useState("")
+  const [url, seturl] = useState("")
+  const [name, setname] = useState("")
+  const userId = localStorage.getItem("userId")
+
+
 
   useEffect(() => {
-    const getposts = () => {
-      fetch("http://localhost:3000/auth/publications", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setPosts(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching posts:", error);
-        });
-    };
+    searchById();
     getposts();
   }, []);
+  const getposts = () => {
+    fetch("http://localhost:3000/auth/publications", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  };
+
+  const reset = () => {
+    settitle("");
+    seturl("");
+  }
+
+
+  const searchById = async () => {
+    if (!userId) return;
+
+    const response = await fetch(`http://localhost:3000/auth/search/${userId}`);
+    const data = await response.json();
+    console.log(data)
+    setname(data.username);
+  };
+  const createnewpost = () => {
+    fetch("http://localhost:3000/auth/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        image_url: url,
+        createdby: name
+      })
+    })
+    reset();
+    getposts();
+    searchById();
+
+  }
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation">
+    <Box sx={{ width: 250, bgcolor: '#8f8f8ffa', height: '100%', color: 'white' }} role="presentation">
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {[
+          { text: 'Home', icon: <HomeIcon /> },
+          { text: 'Favoritos', icon: <FavoriteIcon /> },
+          { text: 'Mensajes', icon: <MailIcon /> },
+          { text: 'Notificaciones', icon: <NotificationsIcon /> },
+        ].map((item) => (
+          <ListItem key={item.text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {<MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {[
+          { text: 'Reportes', icon: <MailIcon /> },
+          { text: 'Papelera', icon: <DeleteIcon /> },
+          { text: 'Spam', icon: <ReportIcon /> },
+        ].map((item) => (
+          <ListItem key={item.text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {<InboxIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -87,11 +139,35 @@ export default function Home(props: MediaProps) {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box >
       <Drawer variant="permanent">
         {DrawerList}
       </Drawer>
-      <div className='contain' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', flex: 1, padding: '20px' }}>
+
+      <div className='contain'>
+
+        <Card sx={{ width: '40%', m: 2, p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Typography variant="h6">Crear Nueva Publicación</Typography>
+          <TextField
+            label="¿Qué estás pensando?"
+            multiline
+            rows={3}
+            variant="outlined"
+            fullWidth
+            value={title}
+            onChange={(e) => settitle(e.target.value)}
+          />
+          <TextField
+            label="URL de imagen (opcional)"
+            variant="outlined"
+            fullWidth
+            value={url}
+            onChange={(e) => seturl(e.target.value)}
+          />
+          <Button onClick={createnewpost} variant="contained" color="primary">Publicar</Button>
+        </Card>
+
+
         {posts.map((post) => (
           <Card key={post.id} sx={{ width: '40%', m: 2 }}>
             <CardHeader
@@ -106,7 +182,7 @@ export default function Home(props: MediaProps) {
                   <MoreVertIcon />
                 </IconButton>
               }
-              title={post.title  || "Sin Titulo"}
+              title={post.createdby}
               subheader={new Date(post.createdAt).toLocaleDateString()}
             />
             {post.image_url && (
@@ -125,6 +201,7 @@ export default function Home(props: MediaProps) {
           </Card>
         ))}
       </div>
+
     </Box>
   );
 }

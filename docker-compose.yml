@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    container_name: social_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: socialdb
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend/auth-service
+    container_name: social_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: socialdb
+      JWT_SECRET: your_jwt_secret
+    depends_on:
+      - db
+
+  frontend:
+    build: ./front-end/my-app
+    container_name: social_frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

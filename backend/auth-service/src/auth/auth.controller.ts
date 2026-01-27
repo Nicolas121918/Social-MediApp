@@ -1,5 +1,6 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post, Get,Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UsersService } from 'src/users/users.service';
 import { get } from 'http';
 
 @Controller('auth')
@@ -23,7 +24,7 @@ export class AuthController {
     }
 
     @Post('posts')
-    createPost(@Body() body: { title: string, createdby: number, image_url?: string }) {
+    createPost(@Body() body: { title: string, createdby: string, image_url?: string }) {
         return this.authService.createpost(body.title, body.createdby, body.image_url);
     }
 
@@ -31,7 +32,13 @@ export class AuthController {
     getAllPosts() {
         return this.authService.getallposts();
     }
-    
+
+
+    @Get('search/:id')
+    async getUserById(@Param('id') id: string) {
+        return this.authService.getUserNameById(Number(id));
+    }
 }
+
 
 
