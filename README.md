@@ -40,8 +40,7 @@ El proyecto fue desarrollado como **prueba técnica** para demostrar habilidades
 ## ⚡ Instalación y ejecución
 
 1. Clonar el repositorio:
-2. 
-git clone https://github.com/tuusuario/social-media.git
+2. git clone https://github.com/tuusuario/social-media.git
 cd social-media
 
 
