@@ -96,6 +96,7 @@ const Login = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
                 <input
                   className="flip-card__input"
@@ -104,6 +105,7 @@ const Login = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
 
                 <button onClick={iniciarsesion} className="flip-card__btn" type="submit">
@@ -121,6 +123,7 @@ const Login = () => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
                 <input
                   className="flip-card__input"
@@ -129,6 +132,7 @@ const Login = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <button onClick={Registrarse} className="flip-card__btn" type="submit">
                   Registrarse

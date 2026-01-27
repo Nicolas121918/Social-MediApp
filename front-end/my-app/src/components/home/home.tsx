@@ -156,6 +156,7 @@ export default function Home() {
             fullWidth
             value={title}
             onChange={(e) => settitle(e.target.value)}
+            required
           />
           <TextField
             label="URL de imagen (opcional)"
@@ -163,6 +164,7 @@ export default function Home() {
             fullWidth
             value={url}
             onChange={(e) => seturl(e.target.value)}
+            required
           />
           <Button onClick={createnewpost} variant="contained" color="primary">Publicar</Button>
         </Card>
