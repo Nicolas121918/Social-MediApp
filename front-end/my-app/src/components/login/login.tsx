@@ -59,7 +59,6 @@ const Login = () => {
         if (data.accessToken) {
           localStorage.setItem("token", data.accessToken);
           localStorage.setItem("userId", data.user.id.toString());
-          console.log(localStorage.getItem("userId"));
           resetForm();
           navigate("/home");
           alert("¡Inicio de sesión exitoso!");

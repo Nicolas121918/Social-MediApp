@@ -25,7 +25,6 @@ import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import "./home.css"
 
-
 interface Post {
   id: number;
   title: string;
@@ -43,70 +42,67 @@ interface Post {
 
 
 export default function Home() {
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [title, settitle] = useState("")
   const [url, seturl] = useState("")
   const [name, setname] = useState("")
-  const userId = localStorage.getItem("userId")
-
-
   const reset = () => {
     settitle("");
     seturl("");
   }
 
-
   useEffect(() => {
-    getposts();
     searchById();
-  }, [posts]);
+    getposts();
+  }, [])
 
-
-
-  const createnewpost = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/auth/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          image_url: url,
-          createdby: name,
-        }),
+  const getposts = () => {
+    fetch("http://localhost:3000/auth/publications", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
       });
-
-      if (!response.ok) {
-        throw new Error("Error creando el post");
-      }
-
-      await getposts();
-      reset();
-    } catch (error) {
-      console.error(error);
-    }
   };
-
-  const getposts = async () => {
-    const response = await fetch("http://localhost:3000/auth/publications");
-    const data = await response.json();
-    setPosts(data);
-  };
-
-
 
 
   const searchById = async () => {
+    const userId = localStorage.getItem("userId")
     if (!userId) return;
+    try {
+      const response = await fetch(`http://localhost:3000/auth/search/${userId}`);
+      const data = await response.json();
+      if (data.username && data.username !== name) {
+        setname(data.username);
+      }
+    } catch (error) {
+      console.log(error)
+    }
 
-    const response = await fetch(`http://localhost:3000/auth/search/${userId}`);
-    const data = await response.json();
-    console.log(data)
-    setname(data.username);
   };
-
-
+  const createnewpost = async () => {
+    await fetch("http://localhost:3000/auth/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        image_url: url,
+        createdby: name
+      })
+    })
+    reset();
+    getposts();
+  }
 
   const DrawerList = (
     <Box sx={{ width: 250, bgcolor: '#8f8f8ffa', height: '100%', color: 'white' }} role="presentation">
