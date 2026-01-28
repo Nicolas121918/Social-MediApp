@@ -50,31 +50,51 @@ export default function Home() {
   const userId = localStorage.getItem("userId")
 
 
-
-  useEffect(() => {
-    searchById();
-    getposts();
-  }, []);
-  const getposts = () => {
-    fetch("http://localhost:3000/auth/publications", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  };
-
   const reset = () => {
     settitle("");
     seturl("");
   }
+
+
+  useEffect(() => {
+    getposts();
+    searchById();
+  }, [posts]);
+
+
+
+  const createnewpost = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/auth/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          image_url: url,
+          createdby: name,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error creando el post");
+      }
+
+      await getposts();
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getposts = async () => {
+    const response = await fetch("http://localhost:3000/auth/publications");
+    const data = await response.json();
+    setPosts(data);
+  };
+
+
 
 
   const searchById = async () => {
@@ -85,23 +105,8 @@ export default function Home() {
     console.log(data)
     setname(data.username);
   };
-  const createnewpost = () => {
-    fetch("http://localhost:3000/auth/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        image_url: url,
-        createdby: name
-      })
-    })
-    reset();
-    getposts();
-    searchById();
 
-  }
+
 
   const DrawerList = (
     <Box sx={{ width: 250, bgcolor: '#8f8f8ffa', height: '100%', color: 'white' }} role="presentation">
