@@ -39,8 +39,6 @@ interface Post {
  */
 
 
-
-
 export default function Home() {
 
   const [posts, setPosts] = useState<Post[]>([]);
