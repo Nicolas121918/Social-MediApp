@@ -15,7 +15,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import HomeIcon from '@mui/icons-material/Home';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -23,6 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ReportIcon from '@mui/icons-material/Report'
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+
 import "./home.css"
 
 interface Post {
@@ -197,7 +198,7 @@ export default function Home() {
                     )
                   }}
                 >
-                  <MoreVertIcon />
+                  <EditIcon />
                 </IconButton>
               }
               title={post.createdby}
