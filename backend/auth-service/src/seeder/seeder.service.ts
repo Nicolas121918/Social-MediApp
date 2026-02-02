@@ -5,10 +5,11 @@ import { User } from 'src/users/entities/user.entity';
 import { Post } from 'src/users/entities/post.entity';
 import * as bcrypt from 'bcrypt';
 
+/* le dice a nest que va ser un servicio que puede ser usado en otras partes del codigo  */
 @Injectable()
 export class SeederService {
     private logger = new Logger('Seeder');
-
+    /* objeto principal de typeorm que se entiende con Postgres */
     constructor(private dataSource: DataSource) { }
 
     async run() {

@@ -86,6 +86,8 @@ export default function Home() {
     }
 
   };
+
+
   const createnewpost = async () => {
     await fetch("http://localhost:3000/auth/posts", {
       method: "POST",
@@ -101,6 +103,7 @@ export default function Home() {
     reset();
     getposts();
   }
+
 
   const DrawerList = (
     <Box sx={{ width: 250, bgcolor: '#8f8f8ffa', height: '100%', color: 'white' }} role="presentation">

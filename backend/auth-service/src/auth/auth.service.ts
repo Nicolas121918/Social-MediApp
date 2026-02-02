@@ -5,6 +5,7 @@ import { Post } from '../users/entities/post.entity';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
+import { NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class AuthService {
@@ -78,6 +79,20 @@ export class AuthService {
         if (!user) return null;
         return { username: user.username };
     }
+
+
+
+    async updatepost(id: number, newpost: string) {
+        const post = await this.postsRepository.findOne({ where: { id } })
+
+        if (!post) {
+            throw new NotFoundException('Post no encontrado')
+        }
+
+        post.title = newpost
+        return await this.postsRepository.save(post)
+    }
+
 
 
 

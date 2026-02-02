@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get,Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from 'src/users/users.service';
 import { get } from 'http';
@@ -6,6 +6,7 @@ import { get } from 'http';
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
+
 
     // Endpoint
     @Post('register')
@@ -37,6 +38,17 @@ export class AuthController {
     @Get('search/:id')
     async getUserById(@Param('id') id: string) {
         return this.authService.getUserNameById(Number(id));
+    }
+
+    @Put('update')
+    async updatepost(@Body() body : {id: number, newpost: string}) {
+        return this.authService.updatepost(body.id, body.newpost)
+
+    }
+
+    @Put('upd/:id/') 
+    async update(@Param('id') id : number, newpost : string ){
+        return this.authService.updatepost(Number(id),newpost)
     }
 }
 
