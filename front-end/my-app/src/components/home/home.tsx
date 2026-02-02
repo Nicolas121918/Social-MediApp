@@ -138,15 +138,15 @@ export default function Home() {
         ))}
       </List>
     </Box>
-  );
+  )
 
   return (
-    <Box >
+    <Box>
       <Drawer variant="permanent">
         {DrawerList}
       </Drawer>
 
-      <div className='contain'>
+      <div className="contain">
 
         <Card sx={{ width: '40%', m: 2, p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Typography variant="h6">Crear Nueva Publicación</Typography>
@@ -154,58 +154,73 @@ export default function Home() {
             label="¿Qué estás pensando?"
             multiline
             rows={3}
-            variant="outlined"
             fullWidth
             value={title}
             onChange={(e) => settitle(e.target.value)}
-            required
           />
           <TextField
             label="URL de imagen (opcional)"
-            variant="outlined"
             fullWidth
             value={url}
             onChange={(e) => seturl(e.target.value)}
-            required
           />
-          <Button onClick={createnewpost} variant="contained" color="primary">Publicar</Button>
+          <Button onClick={createnewpost} variant="contained">
+            Publicar
+          </Button>
         </Card>
-
 
         {posts.map((post) => (
           <Card key={post.id} sx={{ width: '40%', m: 2 }}>
             <CardHeader
-              avatar={
-                <Avatar
-                  alt={post.title}
-                  src="https://www.flaticon.es/icono-gratis/telefono_10219380?term=personas&page=1&position=39&origin=tag&related_id=10219380"
-                />
-              }
+              avatar={<Avatar alt={post.title} />}
               action={
-                <IconButton aria-label="settings">
+                <IconButton
+                  onClick={async () => {
+                    const newTitle = prompt('Nuevo título', post.title)
+                    if (!newTitle) return
+
+                    await fetch('http://localhost:3000/auth/update', {
+                      method: 'PUT',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        id: post.id,
+                        newpost: newTitle,
+                      }),
+                    })
+
+                    setPosts((prev) =>
+                      prev.map((p) =>
+                        p.id === post.id ? { ...p, title: newTitle } : p
+                      )
+                    )
+                  }}
+                >
                   <MoreVertIcon />
                 </IconButton>
               }
               title={post.createdby}
               subheader={new Date(post.createdAt).toLocaleDateString()}
             />
+
             {post.image_url && (
               <CardMedia
                 component="img"
                 height="140"
-                image={post.image_url || "https://img.freepik.com/foto-gratis/codificacion-programas-informaticos-pantalla_53876-138060.jpg?semt=ais_hybrid&w=740&q=80"}
+                image={post.image_url}
                 alt={post.title}
               />
             )}
+
             <CardContent>
-              <Typography variant="body2" component="p" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2">
                 {post.title}
               </Typography>
             </CardContent>
           </Card>
         ))}
       </div>
-
     </Box>
-  );
-}
+  )
+} 
