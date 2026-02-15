@@ -3,199 +3,135 @@
 
 ---
 
-<h1 id="section"></h1>
-<pre><code>🚀 Red Social Full Stack (Arquitectura de Microservicios)
+<h1 id="🐱-meowspace---fullstack-app">🐱 MeowSpace - Fullstack-App</h1>
+<p>Este proyecto es una aplicación <strong>Fullstack</strong> integral diseñada para la gestión y consulta de razas de gatos. El sistema permite consumir datos de una API externa, gestionar información de usuarios y persistir datos en una base de datos distribuida en la nube.</p>
+<h2 id="🚀-tecnologías-utilizadas">🚀 Tecnologías Utilizadas</h2>
+<h3 id="backend-spring-boot"><strong>Backend (Spring Boot)</strong></h3>
+<ul>
+<li>
+<p><strong>Java 17 &amp; Spring Boot 3</strong>: Framework principal para la lógica de la API.</p>
+</li>
+<li>
+<p><strong>Spring Data MongoDB</strong>: Integración para el manejo de datos NoSQL.</p>
+</li>
+<li>
+<p><strong>JUnit 5 &amp; Mockito</strong>: Suite de pruebas unitarias y simulación de dependencias.</p>
+</li>
+<li>
+<p><strong>Maven</strong>: Gestión de ciclo de vida y dependencias.</p>
+</li>
+</ul>
+<h3 id="frontend-angular"><strong>Frontend (Angular)</strong></h3>
+<ul>
+<li>
+<p><strong>Angular 17+</strong>: Framework para una interfaz de usuario dinámica.</p>
+</li>
+<li>
+<p><strong>RxJS</strong>: Programación reactiva mediante Observables.</p>
+</li>
+<li>
+<p><strong>Angular Router</strong>: Sistema de navegación y protección de rutas (Guards).</p>
+</li>
+</ul>
+<h3 id="infraestructura--devops"><strong>Infraestructura &amp; DevOps</strong></h3>
+<ul>
+<li>
+<p><strong>Docker &amp; Docker Compose</strong>: Contenedorización de toda la plataforma.</p>
+</li>
+<li>
+<p><strong>MongoDB Atlas</strong>: Base de datos como servicio (DBaaS) alojada en la nube.</p>
+</li>
+</ul>
+<hr>
+<h2 id="🏛️-arquitectura-y-división-de-capas">🏛️ Arquitectura y División de Capas</h2>
+<p>Para asegurar un código limpio y escalable, el proyecto se divide en las siguientes capas:</p>
+<ul>
+<li>
+<p><strong>Controller</strong>: Punto de entrada de las peticiones HTTP.</p>
+</li>
+<li>
+<p><strong>Service / Use Case</strong>: Contiene la lógica de negocio y reglas del sistema.</p>
+</li>
+<li>
+<p><strong>Repository</strong>: Capa encargada de la comunicación con MongoDB.</p>
+</li>
+<li>
+<p><strong>Component (Frontend)</strong>: Maneja la lógica visual y la interacción del usuario.</p>
+</li>
+</ul>
+<hr>
+<h2 id="🧠-desafíos-y-aprendizajes">🧠 Desafíos y Aprendizajes</h2>
+<p>Este proyecto representó un crecimiento técnico importante, enfrentando los siguientes retos:</p>
+<ol>
+<li>
+<p><strong>Implementación de MongoDB Atlas</strong>: Fue mi primera experiencia configurando una base de datos NoSQL en la nube. El mayor aprendizaje fue gestionar el acceso a la red (Network Access) y las cadenas de conexión seguras.</p>
+</li>
+<li>
+<p><strong>Dockerización Integral</strong>: Lograr que el contenedor del Backend se comunicara de forma fluida con el Frontend y con el clúster de Atlas en la nube, manejando variables de entorno y redes internas de Docker.</p>
+</li>
+<li>
+<p><strong>Integración Fullstack</strong>: Sincronizar el ciclo de vida de los componentes de Angular con las respuestas asíncronas de la API en Spring Boot.</p>
+</li>
+</ol>
+<hr>
+<h2 id="🧪-pruebas-unitarias">🧪 Pruebas Unitarias</h2>
+<p>Se implementaron pruebas unitarias para garantizar la estabilidad del sistema:</p>
+<ul>
+<li>
+<p><strong>UseCase Tests</strong>: Validación de la lógica de negocio aislando el <code>RestTemplate</code> mediante <code>@Mock</code>.</p>
+</li>
+<li>
+<p><strong>Controller Tests</strong>: Pruebas de integración web usando <code>MockMvc</code> para validar los endpoints y códigos de estado HTTP.</p>
+</li>
+</ul>
+<p>Para ejecutar los tests, utiliza el siguiente comando en la carpeta del backend:</p>
+<p>Bash</p>
+<pre><code>cd Backend/catapi
+./mvnw test
 
-Plataforma web tipo red social desarrollada bajo una arquitectura de microservicios, permitiendo autenticación segura de usuarios, creación de publicaciones y visualización de contenido en tiempo real.
-
-Este proyecto fue desarrollado como prueba técnica para demostrar dominio en entornos dockerizados, integración de APIs REST y uso de tecnologías modernas de desarrollo.
-
-Mi rol dentro del proyecto fue **Full Stack Developer**, siendo responsable del diseño de microservicios, modelado de base de datos, autenticación con JWT, integración frontend-backend y configuración completa del entorno Docker.
-
----
-
-# ⚙️ Funcionalidades
-
-✔ Autenticación segura con JWT  
-✔ Inicio de sesión con validación de credenciales  
-✔ Creación de publicaciones con título e imagen opcional  
-✔ Feed social con listado de publicaciones  
-✔ Seeder automático para generación de datos de prueba  
-✔ Arquitectura desacoplada por microservicios  
-
----
-
-# 🏗 Arquitectura del Sistema
-
-El ecosistema está compuesto por:
-
-📦 Backend (Microservicio API - NestJS)  
-📦 Frontend (Cliente Web - React + MUI)  
-📦 Base de Datos PostgreSQL  
-
-Cada servicio corre en un contenedor independiente y se comunica mediante red interna definida en Docker Compose.
-
----
-
-# 🚀 Tecnologías
-
-## Backend
-
-- Node.js
-- NestJS
-- TypeORM
-- PostgreSQL
-- JWT
-- Docker
-
-## Frontend
-
-- React
-- Material-UI (MUI)
-- Hooks (useState, useEffect)
-- Fetch API
-
-## Infraestructura
-
-- Docker
-- Docker Compose
-- Seeder automático
-
----
-
-# 🔐 Seguridad y Autenticación
-
-✔ Login con JWT  
-✔ Tokens firmados  
-✔ Protección de rutas  
-✔ Manejo de sesiones stateless  
-✔ Validación de credenciales en backend  
-
----
-
-# 📂 Estructura del Proyecto
-
-```
-social-media/
-│── backend/
-│   │── src/
-│   │── seeder/
-│   │── Dockerfile
-│   │── .env
-│
-│── frontend/
-│   │── src/
-│   │── components/
-│   │── pages/
-│   │── Dockerfile
-│
-│── docker-compose.yml
-│── README.md
-```
-
----
-
-# 🧪 Requisitos Previos
-
-- Docker
-- Docker Compose
-
-(No se requiere instalación manual de dependencias si se usa Docker)
-
----
-
-# ⚙️ Instalación
-
-## 1️⃣ Clonar repositorio
-
-```bash
-git clone https://github.com/tuusuario/social-media.git
-cd social-media
-```
-
-## 2️⃣ Levantar contenedores
-
-```bash
-docker-compose up --build
-```
-
-Esto construirá y levantará:
-
-- Backend (Puerto 3000)
-- Frontend (Puerto 5173)
-- PostgreSQL
-
----
-
-# 🌐 Acceso al Sistema
-
-Frontend:  
-http://localhost:5173  
-
-Backend API:  
-http://localhost:3000  
-
----
-
-# 👥 Usuarios de Prueba (Seeder)
-
-| Usuario   | Contraseña |
-|-----------|------------|
-| alice     | 1234       |
-| bob       | 1234       |
-| charlie   | 1234       |
-| david     | 1234       |
-| eva       | 1234       |
-
----
-
-# 🌐 Endpoints Principales (API REST)
-
-| Método | Endpoint              | Descripción              |
-|--------|----------------------|--------------------------|
-| POST   | /auth/login          | Login de usuario         |
-| GET    | /auth/search/:id     | Obtener usuario por ID   |
-| GET    | /auth/publications   | Listar publicaciones     |
-| POST   | /auth/posts          | Crear publicación        |
-
----
-
-# 🐳 Dockerización
-
-✔ Backend aislado  
-✔ Frontend optimizado  
-✔ Base de datos persistente  
-✔ Comunicación interna entre servicios  
-
-La aplicación puede desplegarse fácilmente en VPS, servidores cloud o entornos CI/CD.
-
----
-
-# 🎯 Retos y Aprendizajes
-
-🔗 Integración Full Stack con APIs REST  
-🐳 Orquestación de servicios con Docker Compose  
-💾 Modelado de datos escalable con TypeORM  
-⚛️ Manejo de estado en React  
-🔐 Autenticación stateless con JWT  
-
----
-
-# 🧠 Estado del Proyecto
-
-✔ Autenticación funcional  
-✔ Publicaciones dinámicas  
-✔ Docker operativo  
-✔ Seeder implementado  
-✔ Arquitectura desacoplada  
-
----
-
-# 👨‍💻 Autor
-
-**Kevin Nicolás Beltrán Rivera**  
-Desarrollador Full Stack Junior  
-
-LinkedIn | GitHub
 </code></pre>
+<hr>
+<h2 id="🛠️-guía-de-ejecución">🛠️ Guía de Ejecución</h2>
+<p>Sigue estos pasos para levantar el proyecto completo en tu máquina local:</p>
+<h3 id="clonar-el-repositorio"><strong>1. Clonar el repositorio</strong></h3>
+<p>Bash</p>
+<pre><code>git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+cd TU_REPOSITORIO
+
+</code></pre>
+<h3 id="levantar-la-infraestructura-con-docker"><strong>2. Levantar la infraestructura con Docker</strong></h3>
+<p>Asegúrate de tener Docker abierto y ejecuta:</p>
+<p>Bash</p>
+<pre><code>docker-compose up --build
+
+</code></pre>
+<h3 id="acceso-a-las-aplicaciones"><strong>3. Acceso a las aplicaciones</strong></h3>
+<p>Una vez que los contenedores estén en ejecución (Status: Running), abre tu navegador en:</p>
+<ul>
+<li>
+<p><strong>Frontend:</strong> <code>bash http://localhost:4200</code></p>
+</li>
+<li>
+<p><strong>Backend API:</strong> <code>bash http://localhost:8080</code></p>
+</li>
+</ul>
+<hr>
+<h2 id="📦-entregables-adjuntos">📦 Entregables Adjuntos</h2>
+<ul>
+<li>
+<p>✅ Código fuente completo en <strong>GitHub</strong>.</p>
+</li>
+<li>
+<p>✅ Archivos de configuración <strong>Docker</strong> y <strong>Docker Compose</strong>.</p>
+</li>
+<li>
+<p>✅ Documentación técnica en formato <strong>PDF</strong>.</p>
+</li>
+<li>
+<p>✅ Suite de <strong>Pruebas Unitarias</strong> funcional.</p>
+</li>
+</ul>
+<hr>
+<p><strong>Desarrollado por:</strong> Kevin Beltran.</p>
+<p><strong>GitHub:</strong> <a href="https://github.com/Nicolas121918">https://github.com/Nicolas121918</a></p>
 
